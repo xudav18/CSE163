@@ -19,7 +19,7 @@ def main():
 	data = data.dropna()
 	data = data.set_index('competitorname')
 	question_one(data)
-	question_two(data)
+	#question_two(data)
 	#question_three()
 
 def question_one(data):
