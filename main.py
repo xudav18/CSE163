@@ -14,17 +14,51 @@ import numpy as np
 from sklearn.metrics import mean_squared_error
 
 def main():
+	"""
+	Runs methods that generate graphs for model predictions 
+	vs actual win percentages based off every
+	attribute as a whole and individually
+	"""
 	sns.set()
 	data = pd.read_csv('candy-data.csv')
 	data = data.dropna()
 	data = data.set_index('competitorname')
 	question_one(data)
-	#question_two(data)
-	#question_three()
+	question_two(data)
 
 def question_one(data):
+	"""
+	Plots predicted from model vs actual win percentage based off all
+	candy attribute as a whole. Takes dataset as parameter.
+	"""
 	features = data.loc[:, (data.columns != 'winpercent')]
 	labels = data['winpercent']
+	mean_sq_err = plot_predictions_vs_actual(features, labels)
+	print('Total: ' + str(mean_sq_err))
+	plt.title("Model Predictions vs Actual Win Percentage on Test Set")
+	plt.savefig('model_predictions_vs_actual.png')
+
+def question_two(data):
+	"""
+	Plots predicted from model vs actual win percentage based off each
+	candy attribute individually. Takes dataset as parameter.
+	"""
+	features = data.loc[:, (data.columns != 'winpercent')]
+	labels = data['winpercent']
+	for feature in features.columns:
+		mean_sq_err = plot_predictions_vs_actual(data[feature].values.reshape(-1, 1), labels)
+		print(feature + ": " + str(mean_sq_err))
+		plt.title("Model Predictions based off " + feature + " Attribute vs Actual Win Percentage on Test Set")
+		plt.savefig(feature + '_model_predictions_vs_actual.png')	
+
+def plot_predictions_vs_actual(features, labels):
+	"""
+	Returns mean squared error for model predictions vs
+	actual win percentage on test set.
+	Helper method to generate plots for ML models based on a 
+	set of features and labels. Takes a dataframe features
+	and dataframe labels as input.
+	"""
 	features_train, features_test, labels_train, labels_test = \
 		train_test_split(features, labels, test_size=0.25)
 	x_axis = labels_test.index
@@ -41,12 +75,10 @@ def question_one(data):
 	ax.legend(fontsize = 8 )
 	plt.xlabel("Competitor Name")
 	plt.ylabel("Win Percentage")
-	plt.title("Model Predictions vs Actual Win Percentage on Test Set")
 	plt.xticks(rotation=90)
-	plt.subplots_adjust(bottom=0.33)
-	plt.savefig('model_predictions_vs_actual.png')
-	print(mean_squared_error(labels_test, model.predict(features_test)))
-
+	plt.subplots_adjust(bottom=0.35)
+	return mean_squared_error(labels_test, model.predict(features_test))
+	
 
 if __name__ == "__main__":
 	main()
