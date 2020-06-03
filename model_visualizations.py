@@ -2,7 +2,9 @@
 Jimmy Guo and David Xu
 CSE 163 Final
 
-Implements methods to generate data visualizations for CSE 163 Final
+Implements methods to generate data visualizations
+of ML Regressor model predictions vs actual
+win percentages of candy for CSE 163 Final
 using the candy-data.csv dataset
 """
 import pandas as pd
@@ -37,7 +39,7 @@ def question_one(data):
     labels = data['winpercent']
     mean_sq_err = plot_pred_vs_actual(features, labels)
     print('Total: ' + str(mean_sq_err))
-    plt.title("Model Predictions based on All Attributes" +
+    plt.title("Model Predictions based on All Attributes " +
               "vs Actual Win Percentage")
     plt.savefig('model_predictions_vs_actual.png')
 
