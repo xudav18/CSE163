@@ -9,7 +9,6 @@ using the candy-data.csv dataset
 """
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -22,7 +21,6 @@ def main():
     vs actual win percentages based off every
     attribute as a whole and individually
     """
-    sns.set()
     data = pd.read_csv('candy-data.csv')
     data = data.dropna()
     data = data.set_index('competitorname')
