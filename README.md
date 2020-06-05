@@ -9,7 +9,6 @@ Ensure you have the latest version of Python, and install the following librarie
 in whatever fashion you find best (pip install ..., etc.):
 - pandas
 - numpy
-- seaborn
 - plotly.express
 - matplotlib
 - sklearn
